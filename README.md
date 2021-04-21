@@ -1,6 +1,7 @@
 # Scraping jobs for Alex
 
-![](assets/alex.jpg)
+![](assets/alex.jpeg)
+
 _Alex is a guy who wants to know who is hiring who for what. Let's scrape jobs for Alex?_
 
 ## Webscraping
