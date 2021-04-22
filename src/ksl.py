@@ -1,13 +1,12 @@
-import os
 import time
 import json
 import requests
+import urllib3
 from random import randint
 from bs4 import BeautifulSoup
-from datetime import datetime
-from dotenv import load_dotenv
 
 
+urllib3.disable_warnings()
 BASE_URL = "https://jobs.ksl.com/search/posted/last-7-days"
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"
@@ -34,7 +33,8 @@ def getJobListings(url, headers):
 
     for url in urls:
         newLink = MAIN_URL + url
-        data = getJobDescriptions(newLink, HEADERS)
+        getJobDescriptions(newLink, HEADERS)
+        time.sleep(randint(1, 15))
 
     if (
         len(names) == len(urls)
@@ -64,7 +64,7 @@ def getJobDescriptions(url, headers):
     soup = BeautifulSoup(data.text, "html.parser")
 
     for description in soup.find_all(
-        "meta", {property: "og:description"}, "html.parser"
+        "meta", {"property": "og:description"}, "html.parser"
     ):
         descriptions.append(description.text.strip())
     data.close()
